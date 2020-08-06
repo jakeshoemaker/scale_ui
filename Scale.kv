@@ -1,0 +1,246 @@
+# Filename MainWindow.kv
+
+WindowManager:
+    id: manager
+
+    ScaleScreen:
+    SettingsScreen:
+
+<ScaleScreen>:
+    id: "main"
+
+    GridLayout:
+        cols: 1
+        rows: 2
+        size: root.width, root.height
+
+        Label:
+            id: display_text
+            font_size: 40
+            text: root.display_text
+            
+
+        GridLayout:
+            cols: 4
+
+            Button:
+                id: weight_btn
+                text: "Get Weight"
+                on_press: root.weight_btn()
+
+            Button:
+                id: calib_btn
+                text: "Calibrate Scale"
+                on_press: root.calib_btn()
+
+            Button:
+                id: zero_btn
+                text: "Zero Scale"
+                on_press: root.zero_btn()
+                
+            BoxLayout:
+                orientation: 'vertical'
+
+                Button:
+                    id: settings_btn
+                    text: "Settings"
+                    on_release: 
+                        app.root.current = 'settings'
+                        root.manager.transition.direction = "left"
+                
+                Button:
+                    id: connect_btn
+                    text: "Connect"
+                    on_release:
+                        root.connect_btn()
+
+
+<SettingsScreen>:
+    id: "settings"
+
+    BoxLayout:
+        orientation: 'vertical'
+        
+        Label:
+            text: "Settings Portal"
+            font_size: 25
+            size_hint_y: None
+            height: 50
+
+        Button:
+            text: "go back"
+            size_hint_y: None
+            height: 40
+            on_release: 
+                app.root.current = 'main'
+                root.manager.transition.direction = "right"
+            
+
+        GridLayout:
+            cols: 2
+            
+            Label:
+                id: port
+                text: "Port: "
+
+            TextInput:
+                id: port_value
+                multiline: False
+
+            Label:
+                id: baudrate
+                text: "Baudrate: "
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                ToggleButton:
+                    text: "1200"
+                    group: "baudrate"
+                    on_press: 
+                        root.baudrate = 1200
+                        
+                
+                ToggleButton:
+                    text: "2400"
+                    group: "baudrate"
+                    on_press: 
+                        root.baudrate = 2400
+                
+                ToggleButton:
+                    text: "4800"
+                    group: "baudrate"
+                    on_press: 
+                        root.baudrate = 4800
+
+                ToggleButton:
+                    text: "9600"
+                    group: "baudrate"
+                    on_press: 
+                        root.baudrate = 9600
+
+                ToggleButton:
+                    text: "19200"
+                    group: "baudrate"
+                    on_press: 
+                        root.baudrate = 19200
+
+                ToggleButton:
+                    text: "38400"
+                    group: "baudrate"
+                    on_press: 
+                        root.baudrate = 38400
+                
+                ToggleButton:
+                    text: "57500"
+                    group: "baudrate"
+                    on_press: 
+                        root.baudrate = 57500
+
+            Label:
+                id: bytesize
+                text: "ByteSize"
+
+            BoxLayout:
+                orientation: 'horizontal'
+                
+
+                ToggleButton:
+                    text: "7"
+                    group: "bytesize"
+                    on_press: 
+                        root.bytesize = 7
+                        
+                
+                ToggleButton:
+                    text: "8"
+                    group: "bytesize"
+                    on_press: 
+                        root.bytesize = 8
+
+
+            Label:
+                text: "Timeout: " + str(timeout.value)
+
+            Slider:
+                id: timeout
+                min: 1
+                max: 15
+                step: 1
+                orientation: 'horizontal'
+
+            Label:
+                id: stop_bits
+                text: "Stop Bits"
+
+            BoxLayout:
+                orientation: 'horizontal'
+                
+
+                ToggleButton:
+                    text: "1"
+                    group: "stop_bits"
+                    on_press: 
+                        root.stop_bits = 1
+                        
+                
+                ToggleButton:
+                    text: "2"
+                    group: "stop_bits"
+                    on_press: 
+                        root.stop_bits = 2
+
+            Label:
+                id: parity
+                text: "Parity: "
+
+            BoxLayout:
+                orientation: 'horizontal'
+                
+                ToggleButton:
+                    text: "none"
+                    group: "parity"
+                    on_press: 
+                        root.parity = "serial.PARITY_NONE"
+                
+                ToggleButton:
+                    text: "even"
+                    group: "parity"
+                    on_press: 
+                        root.parity = "serial.PARITY_EVEN"
+
+                ToggleButton:
+                    text: "odd"
+                    group: "parity"
+                    on_press: 
+                        root.parity = "serial.PARITY_ODD"
+
+                ToggleButton:
+                    text: "mark"
+                    group: "parity"
+                    on_press: 
+                        root.parity = "serial.PARITY_MARK"
+
+                ToggleButton:
+                    text: "space"
+                    group: "parity"
+                    on_press:
+                        root.parity = "serial.PARITY_SPACE"
+
+        
+        Button:
+            id: save_btn
+            height: 40
+            size_hint_y: None
+            spacing: 10
+            text: "save settings"
+            on_press:
+                port = port_value
+                root.save_btn()
+
+        Label: 
+            id: status
+            size_hint_y: None
+            height: 40
+            font_size: 20
+            text: root.status
