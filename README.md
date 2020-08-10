@@ -7,4 +7,4 @@ This UI built using Python and the Kivy framework:
   ## port
   ## timeout 
         
-    This could be used as a template for serial commincations as the settings panel is set up for serial settings.
+  ###  This could be used as a template for serial commincations as the settings panel is set up for serial settings.
